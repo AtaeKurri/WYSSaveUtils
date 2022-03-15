@@ -42,9 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="readme.xaml.cs">
-      <DependentUpon>readme.md</DependentUpon>
-    </Compile>
     <Compile Include="SaveContent.cs" />
     <Compile Include="SaveLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
