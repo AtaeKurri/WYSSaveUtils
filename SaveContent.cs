@@ -39,7 +39,7 @@ namespace WYSSaveUtils
         public int GlobalDeaths { get; set; }
         public Difficulty CurrentDifficulty { get; set; }
         public List<string> PlayedVoiceLines { get; set; }
-        public int LockedDifficulty { get; set; }
+        public bool LockedDifficulty { get; set; }
         public List<int> DeathsPerLevel { get; set; }
         public List<int> TimePerLevel { get; set; }
         public List<int> UnlockedLevels { get; set; }
@@ -52,20 +52,20 @@ namespace WYSSaveUtils
         public float TimerChapter { get; set; }
         public int CurrentChapter { get; set; }
         public float TimerLevel { get; set; }
-        public int ExplorationMode { get; set; }
+        public bool ExplorationMode { get; set; }
         public List<string> CollectedExplorationPoints { get; set; }
         public float GameSpeed { get; set; }
-        public int TrainingMode { get; set; }
+        public bool TrainingMode { get; set; }
         public List<string> UnlockedDialogs { get; set; }
         public Hats Hat { get; set; }
-        public int HeartFixed { get; set; }
-        public int FinalCreditReached { get; set; }
-        public int PumpInverted { get; set; }
-        public int SpeedRunLegit { get; set; }
+        public bool HeartFixed { get; set; }
+        public bool FinalCreditReached { get; set; }
+        public bool PumpInverted { get; set; }
+        public bool SpeedRunLegit { get; set; }
         public int AngerGameLevel { get; set; }
         public float AngerGameXP { get; set; }
-        public int AutoDifficulty { get; set; }
-        public int FixedJumpheight { get; set; }
+        public bool AutoDifficulty { get; set; }
+        public bool FixedJumpheight { get; set; }
     }
 
     /// <summary>

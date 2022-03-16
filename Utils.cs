@@ -58,6 +58,22 @@ namespace WYSSaveUtils
             }
         }
 
+        internal static bool GetBool(this StreamReader reader, string name)
+        {
+            string line;
+            while (true)
+            {
+                line = reader.ReadLine();
+                if (line == name)
+                {
+                    string variable = reader.ReadLine();
+                    if (variable == null)
+                        throw new NullReferenceException("No match found.");
+                    return int.Parse(variable.Trim()) != 0;
+                }
+            }
+        }
+
         internal static List<string> GetStringList(this StreamReader reader, string name)
         {
             string line;
@@ -95,10 +111,10 @@ namespace WYSSaveUtils
         internal static void EditSingle(this StreamWriter writer, object name, object value)
         {
             writer.WriteLine(name);
-            if (value is float Val)
-            {
-                writer.WriteLine(Val.ToString(CultureInfo.InvariantCulture));
-            }
+            if (value is float ValInt)
+                writer.WriteLine(ValInt.ToString(CultureInfo.InvariantCulture));
+            else if (value is bool ValBool)
+                writer.WriteLine(Convert.ToInt32(ValBool));
             else
                 writer.WriteLine(value);
             writer.WriteLine("");

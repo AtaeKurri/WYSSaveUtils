@@ -24,3 +24,6 @@ When you're finished with what you're doing, call `save.CloseLoader();`
 
 You can get the string value identifiers with the `Fields` object, using the same access value as `saveContent`.  
 e.g : `Fields.GameVersion` will return `"Game Version"`
+
+You can change the leader mode from a slot format to a filepath format using `save.ChangeMode(slot or filepath);`.  
+But be sure you don't call it before saving the changes you made in the old file, or these will be saved to the new file.
