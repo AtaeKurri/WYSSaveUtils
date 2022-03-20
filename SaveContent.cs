@@ -11,7 +11,6 @@ namespace WYSSaveUtils
 {
     public class SaveContent
     {
-
         public enum Difficulty
         {
             NONE = -1,
@@ -33,7 +32,8 @@ namespace WYSSaveUtils
             SHIT = 6,
             HEART = 7
         }
-
+        
+        public int save_id { get; set; }
         public string GameVersion { get; set; }
         public int CurrentRoom { get; set; }
         public int GlobalDeaths { get; set; }
@@ -73,6 +73,7 @@ namespace WYSSaveUtils
     /// </summary>
     public static class Fields
     {
+        public static readonly string GameID = null;
         public static readonly string GameVersion = "Game Version";
         public static readonly string CurrentRoom = "Room";
         public static readonly string GlobalDeaths = "Deaths";

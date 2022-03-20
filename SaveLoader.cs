@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace WYSSaveUtils
@@ -83,7 +83,7 @@ namespace WYSSaveUtils
 
         /// <summary>
         /// Reloads the content of the saveContent object to be read again by your program.
-        /// Is called automatically by the EditValue method.
+        /// Is called automatically by the WriteChanges method.
         /// </summary>
         public void Reload()
         {
@@ -122,6 +122,9 @@ namespace WYSSaveUtils
                 Stream stream = File.OpenWrite(Filepath);
                 writer = new StreamWriter(stream);
             }
+
+            writer.WriteLine(saveContent.save_id);
+            writer.WriteLine("");
 
             writer.WriteLine("This save file has been modified by WYSSaveUtils.");
             writer.WriteLine("It is to be considered cheating when using it in a speedrun or a competition of any kind.");
@@ -178,6 +181,7 @@ namespace WYSSaveUtils
             StreamReader reader = new StreamReader(stream);
             saveContent = new SaveContent
             {
+                save_id = reader.GetSaveID(),
                 GameVersion = reader.GetString(Fields.GameVersion),
                 CurrentRoom = reader.GetInt(Fields.CurrentRoom),
                 GlobalDeaths = reader.GetInt(Fields.GlobalDeaths),

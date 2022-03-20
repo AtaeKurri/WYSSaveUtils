@@ -10,6 +10,13 @@ namespace WYSSaveUtils
 {
     internal static class Utils
     {
+        internal static int GetSaveID(this StreamReader reader)
+        {
+            string line;
+            line = reader.ReadLine();
+            return Convert.ToInt32(line);
+        }
+
         internal static string GetString(this StreamReader reader, string name)
         {
             string line;
