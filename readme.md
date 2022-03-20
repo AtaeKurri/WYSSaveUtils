@@ -1,7 +1,7 @@
 ﻿# WYSSaveUtils
 
 This Utility aims to create a stable environment for save and setting files of Will You Snail? to be used by other programs.  
-Expect bugs for this version.
+Expect bugs for this version, sorry.
 
 ### Documentation
 
