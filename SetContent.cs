@@ -6,11 +6,23 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Collections;
 
 namespace WYSSaveUtils
 {
-    public class SetContent
+    public class SetContent : IEnumerable
     {
+        private List<object> propertyList = new List<object>();
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            foreach (var prop in GetType().GetProperties())
+            {
+                propertyList.Add(GetType().GetProperty(prop.Name).GetValue(this, null));
+            }
+            return propertyList.GetEnumerator();
+        }
+
         public string GameVersion { get; set; }
         public bool GamepadRumble { get; set; }
         public float VolumeMaster { get; set; }

@@ -5,6 +5,9 @@ Expect bugs for this version, sorry.
 
 ### Documentation
 
+All of these classes's Content inherit from IEnumerable, making them able to be accessed with a foreach loop.  
+e.g : `foreach (List<KeyBindsContent.KeyBind> key in keys.keyContent) { Console.WriteLine(key[0]); }`.
+
 #### SaveLoader
 
 Create a new instance of SaveLoader with `SaveLoader save = new SaveLoader(0);`  
@@ -55,3 +58,20 @@ e.g : `SetFields.VSync` will return a bool.
 
 You can change the loader mode from a filepath format from the appdata format using `set.ChangeMode();` or `set.ChangeMode(filepath);`.  
 But be sure you don't call it before saving the changed you made, or these will not be saved.
+
+#### KeyBinds
+
+Create a new instance of KeyBinds with `KeyBinds keys = new KeyBinds();`  
+To instanciate, it's the same way as the two other.
+
+You can access the keybinds values using `keys.keyContent.somevalue`
+
+To add a key, use (example) `keys.AddKey(nameof(keys.keyContent.ActionJump), KeyBindsContent.Key.C, KeyBindsContent.KeyType.KEYBOARD);`  
+To remove a key, it's `keys.RemoveKey(nameof(keys.keyContent.ActionJump), KeyBindsContent.Key.C);`  
+And then, `keys.WriteChanges();` to append everything to the Keybinds.sav file.
+
+When you're finished, don't forget to clear the memory using `keys.CloseLoader();`.
+
+You can get the string value identifiers with the `KeyBindsFields` object.  
+And same with all the possible keys you can add : `KeyBindsContent.Key` which is an enum.  
+Warning : This Utility does not **fully** supports gamepads, only keyboards.

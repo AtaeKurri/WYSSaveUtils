@@ -115,6 +115,37 @@ namespace WYSSaveUtils
             }
         }
 
+        internal static List<KeyBindsContent.KeyBind> GetKeyBindList(this StreamReader reader, string name)
+        {
+            string line;
+            while (true)
+            {
+                line = reader.ReadLine();
+                if (line == name)
+                {
+                    List<int> pairList = new List<int>();
+                    string line2 = reader.ReadLine();
+                    while (line2 != "")
+                    {
+                        pairList.Add(Convert.ToInt32(line2));
+                        line2 = reader.ReadLine();
+                    }
+
+                    List<KeyBindsContent.KeyBind> returnList = new List<KeyBindsContent.KeyBind>();
+                    for (int i = 0; i < pairList.Count; i += 2)
+                    {
+                        KeyBindsContent.KeyBind key = new KeyBindsContent.KeyBind
+                        {
+                            Key = (KeyBindsContent.Key)pairList[i],
+                            Type = (KeyBindsContent.KeyType)pairList[i + 1]
+                        };
+                        returnList.Add(key);
+                    }
+                    return returnList;
+                }
+            }
+        }
+
         internal static void EditSingle(this StreamWriter writer, object name, object value)
         {
             writer.WriteLine(name);
@@ -133,9 +164,7 @@ namespace WYSSaveUtils
             writer.WriteLine(values.Count);
 
             foreach (object value in values)
-            {
                 writer.WriteLine(value);
-            }
             writer.WriteLine("");
         }
 
@@ -145,8 +174,18 @@ namespace WYSSaveUtils
             writer.WriteLine(values.Count);
 
             foreach (object value in values)
-            {
                 writer.WriteLine(value);
+            writer.WriteLine("");
+        }
+
+        internal static void EditKeyBinds(this StreamWriter writer, string name, List<KeyBindsContent.KeyBind> values)
+        {
+            writer.WriteLine(name);
+            
+            foreach (KeyBindsContent.KeyBind value in values)
+            {
+                writer.WriteLine((int)value.Key);
+                writer.WriteLine((int)value.Type);
             }
             writer.WriteLine("");
         }

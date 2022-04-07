@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace WYSSaveUtils
 {
@@ -12,7 +13,7 @@ namespace WYSSaveUtils
     /// </summary>
     public class SaveLoader
     {
-        public static string saveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Will_You_Snail";
+        public static string WYSFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Will_You_Snail";
         public SaveContent saveContent;
         // when true, it's loaded from a save slot, if false, it's loaded from an absolute path
         internal bool loaderMode = true;
@@ -30,7 +31,7 @@ namespace WYSSaveUtils
         public SaveLoader(int slot)
         {
             Slot = slot;
-            stream = new FileStream(saveFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", FileMode.Open);
+            stream = new FileStream(WYSFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", FileMode.Open);
             PopulateLines();
             Reload();
         }
@@ -62,7 +63,7 @@ namespace WYSSaveUtils
         {
             Slot = slot;
             loaderMode = true;
-            stream = new FileStream(saveFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", FileMode.Open);
+            stream = new FileStream(WYSFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", FileMode.Open);
             PopulateLines();
             Reload();
         }
@@ -90,7 +91,7 @@ namespace WYSSaveUtils
             if (loaderMode)
             {
                 CloseLoader();
-                stream = new FileStream(saveFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", FileMode.Open);
+                stream = new FileStream(WYSFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", FileMode.Open);
                 FillSaveContent();
             }
             else
@@ -112,8 +113,8 @@ namespace WYSSaveUtils
             StreamWriter writer;
             if (loaderMode)
             {
-                File.WriteAllText(saveFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", string.Empty);
-                Stream stream = File.OpenWrite(saveFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav");
+                File.WriteAllText(WYSFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav", string.Empty);
+                Stream stream = File.OpenWrite(WYSFolder + "\\" + SavePrefixes[Slot] + "SaavoGame23-2.sav");
                 writer = new StreamWriter(stream);
             }
             else
@@ -215,6 +216,29 @@ namespace WYSSaveUtils
                 AutoDifficulty = reader.GetBool(Fields.AutoDifficulty),
                 FixedJumpheight = reader.GetBool(Fields.FixedJumpheight)
             };
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "WYSSaveUtils.rooms.txt";
+
+            Fields.rooms = new List<Fields.Rooms>();
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader readerResource = new StreamReader(stream))
+            {
+                string s = "";
+                int pos = 0;
+                while ((s = readerResource.ReadLine()) != null)
+                {
+                    string[] words = s.Split(' ');
+                    Fields.rooms.Add(new Fields.Rooms(words[1], Convert.ToInt32(words[0]), pos));
+                    pos++;
+                }
+            }
+            /*foreach (string line in File.ReadLines(@"rooms.txt"))
+            {
+                string[] words = line.Split(' ');
+                Fields.rooms.Add(new Fields.Rooms(words[1], Convert.ToInt32(words[0])));
+            }*/
+
             reader.Close();
         }
     }

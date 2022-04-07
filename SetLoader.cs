@@ -14,7 +14,7 @@ namespace WYSSaveUtils
     /// </summary>
     public class SetLoader
     {
-        public static string setFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Will_You_Snail";
+        public static string WYSFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Will_You_Snail";
         public SetContent setContent;
         // when true, it's loaded from a save slot, if false, it's loaded from an absolute path
         internal bool loaderMode = true;
@@ -28,7 +28,7 @@ namespace WYSSaveUtils
         /// </summary>
         public SetLoader()
         {
-            stream = new FileStream(setFolder + "\\SettoIngs23-2.set", FileMode.Open);
+            stream = new FileStream(WYSFolder + "\\SettoIngs23-2.set", FileMode.Open);
             PopulateLines();
             Reload();
         }
@@ -58,7 +58,7 @@ namespace WYSSaveUtils
         public void ChangeMode()
         {
             loaderMode = true;
-            stream = new FileStream(setFolder + "\\SettoIngs23-2.set", FileMode.Open);
+            stream = new FileStream(WYSFolder + "\\SettoIngs23-2.set", FileMode.Open);
             PopulateLines();
             Reload();
         }
@@ -86,14 +86,14 @@ namespace WYSSaveUtils
             if (loaderMode)
             {
                 CloseLoader();
-                stream = new FileStream(setFolder + "\\SettoIngs23-2.set", FileMode.Open);
-                FillSaveContent();
+                stream = new FileStream(WYSFolder + "\\SettoIngs23-2.set", FileMode.Open);
+                FillSettingsContent();
             }
             else
             {
                 CloseLoader();
                 stream = new FileStream(Filepath, FileMode.Open);
-                FillSaveContent();
+                FillSettingsContent();
             }
         }
         
@@ -117,8 +117,8 @@ namespace WYSSaveUtils
             StreamWriter writer;
             if (loaderMode)
             {
-                File.WriteAllText(setFolder + "\\SettoIngs23-2.set", string.Empty);
-                Stream stream = File.OpenWrite(setFolder + "\\SettoIngs23-2.set");
+                File.WriteAllText(WYSFolder + "\\SettoIngs23-2.set", string.Empty);
+                Stream stream = File.OpenWrite(WYSFolder + "\\SettoIngs23-2.set");
                 writer = new StreamWriter(stream);
             }
             else
@@ -168,7 +168,7 @@ namespace WYSSaveUtils
             Reload();
         }
 
-        internal void FillSaveContent()
+        internal void FillSettingsContent()
         {
             StreamReader reader = new StreamReader(stream);
             setContent = new SetContent

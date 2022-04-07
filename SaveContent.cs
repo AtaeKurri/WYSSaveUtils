@@ -6,11 +6,23 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Collections;
 
 namespace WYSSaveUtils
 {
-    public class SaveContent
+    public class SaveContent : IEnumerable
     {
+        private List<object> propertyList = new List<object>();
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            foreach (var prop in GetType().GetProperties())
+            {
+                propertyList.Add(GetType().GetProperty(prop.Name).GetValue(this, null));
+            }
+            return propertyList.GetEnumerator();
+        }
+
         public enum Difficulty
         {
             NONE = -1,
@@ -106,5 +118,21 @@ namespace WYSSaveUtils
         public static readonly string AngerGameXP = "Anger Game XP";
         public static readonly string AutoDifficulty = "Auto Difficulty";
         public static readonly string FixedJumpheight = "Fixed Jump Height";
+
+        public struct Rooms
+        {
+            public string Name;
+            public int Id;
+            public int Pos;
+
+            public Rooms(string name, int id, int pos)
+            {
+                Name = name;
+                Id = id;
+                Pos = pos;
+            }
+        }
+
+        public static List<Rooms> rooms { get; set; }
     }
 }
